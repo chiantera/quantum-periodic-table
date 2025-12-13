@@ -22,7 +22,7 @@ Unlike standard periodic tables that display static text, this tool renders the 
 
 
 https://github.com/chiantera/quantum-periodic-table/tree/main/img/screenshot_titanium.jpg
-![screenshot_titanium](https://github.com/user-attachments/assets/470cc424-43cd-489d-8290-d1c776ecb1ea)
+![screenshot_titanium](https://github.com/chiantera/quantum-periodic-table/tree/main/img/screenshot_titanium.jpg)
 
 ---
 
