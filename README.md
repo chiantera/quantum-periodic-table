@@ -12,7 +12,8 @@ Unlike standard periodic tables that display static text, this tool renders the 
 
 🔗 **[Live Demo](https://chiantera.github.io/quantum-periodic-table/)** 
 
-![screenshot_gif1](https://github.com/chiantera/quantum-periodic-table/tree/main/img/gif1.gif)
+
+![gif1](https://github.com/user-attachments/assets/882a4861-f090-446e-bc4d-98bc88e4844b)
 
 ![screenshot_titanium](https://github.com/user-attachments/assets/470cc424-43cd-489d-8290-d1c776ecb1ea)
 
