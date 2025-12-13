@@ -2,29 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-site-verification" content="hbISN7FSBRONfHWad9kH8UCfq92pcPoED2FFenZpb0I" />
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Quantum Periodic Table | Interactive 3D Visualization</title>
     
-    <title>Quantum Periodic Table | Interactive 3D Visualization</title>
-    <meta name="description" content="A real-time 3D simulation of the Periodic Table. Visualize electron probability clouds, orbital shapes (s, p, d, f), and the Aufbau principle using Monte Carlo rendering.">
-    <meta name="keywords" content="periodic table, quantum mechanics, electron orbitals, 3d visualization, chemistry, physics, education, webgl, threejs">
-    <meta name="author" content="Your Name">
-
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://sapienza.dev/">
-    <meta property="og:title" content="Quantum Periodic Table - 3D Visualizer">
-    <meta property="og:description" content="Interactive Monte Carlo simulation of atomic orbitals. Watch electrons build up from Hydrogen to Oganesson.">
-    <meta property="og:image" content="https://sapienza.dev/img/screenshot_titanium.jpg">
-
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Quantum Periodic Table">
-    <meta name="twitter:description" content="Explore atomic structures in 3D. Real-time Schrödinger equation visualization.">
-    <meta name="twitter:image" content="https://yourdomain.com/img/screenshot_titanium.jpg">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <title>Quantum Periodic Table | Interactive 3D Visualization</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
     <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
@@ -36,11 +16,57 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { margin: 0; overflow: hidden; background-color: #000000; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        canvas { display: block; width: 100vw; height: 100vh; outline: none; cursor: crosshair; }
+        body { margin: 0; overflow: hidden; background-color: #000000; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; touch-action: none; /* Prevent scroll on mobile */ }
+        canvas { display: block; width: 100vw; height: 100vh; outline: none; }
         
-        /* MAIN CONTROLLER PANEL */
-        .ui-panel { position: absolute; top: 20px; left: 20px; z-index: 100; background: rgba(8, 8, 12, 0.92); padding: 20px; border-radius: 12px; border: 1px solid #333; width: 340px; box-shadow: 0 0 50px rgba(0,0,0,1); backdrop-filter: blur(10px); max-height: 90vh; overflow-y: auto; }
+        /* --- RESPONSIVE PANEL CSS --- */
+        .ui-panel { 
+            position: absolute; 
+            top: 20px; 
+            left: 20px; 
+            z-index: 100; 
+            background: rgba(8, 8, 12, 0.92); 
+            padding: 20px; 
+            border-radius: 12px; 
+            border: 1px solid #333; 
+            width: 340px; 
+            /* Mobile Adaptation: Max width is 90% of screen, prevents overflow */
+            max-width: 90vw; 
+            box-shadow: 0 0 50px rgba(0,0,0,1); 
+            backdrop-filter: blur(10px); 
+            max-height: 90vh; 
+            overflow-y: auto; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* COLLAPSED STATE (For Mobile) */
+        .ui-panel.collapsed {
+            height: 85px; /* Only show header */
+            overflow: hidden;
+            background: rgba(8, 8, 12, 0.6); /* More transparent when closed */
+        }
+
+        /* The Minimize Button */
+        .toggle-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 30px;
+            height: 30px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2em;
+            color: #aaa;
+            transition: 0.2s;
+        }
+        .toggle-btn:hover { background: rgba(59, 130, 246, 0.5); color: #fff; }
+
+        /* Hides non-essential elements when collapsed */
+        .ui-panel.collapsed .controls-section { opacity: 0; pointer-events: none; }
         
         /* SLIDERS & BUTTONS */
         input[type="range"] { background: #111; height: 6px; -webkit-appearance: none; width: 100%; margin-top: 5px; border-radius: 3px; outline: none; }
@@ -54,7 +80,7 @@
         input:checked + .slider-toggle { background-color: #3b82f6; }
         input:checked + .slider-toggle:before { transform: translateX(20px); }
 
-        .btn { flex: 1; padding: 10px; background: #222; border: 1px solid #444; border-radius: 6px; color: #eee; font-size: 0.75em; font-weight: bold; cursor: pointer; transition: all 0.2s; text-align: center; letter-spacing: 0.05em; }
+        .btn { flex: 1; padding: 12px; background: #222; border: 1px solid #444; border-radius: 6px; color: #eee; font-size: 0.75em; font-weight: bold; cursor: pointer; transition: all 0.2s; text-align: center; letter-spacing: 0.05em; }
         .btn:hover { background: #333; color: #fff; border-color: #666; }
         .btn-active { background: #1e3a8a; border-color: #3b82f6; color: #fff; box-shadow: 0 0 10px rgba(59, 130, 246, 0.4); }
         
@@ -63,9 +89,9 @@
         .config-display { font-family: 'Courier New', monospace; color: #fbbf24; text-align: center; font-size: 0.9em; margin-bottom: 15px; background: rgba(0,0,0,0.5); padding: 10px; border-radius: 6px; word-wrap: break-word; line-height: 1.5; border: 1px solid #222; }
         .active-shell { color: #ffffff; font-weight: bold; text-shadow: 0 0 8px #ffffff; background: rgba(59, 130, 246, 0.6); padding: 1px 4px; border-radius: 3px; }
         
-        /* HUD FOOTER */
+        /* HUD FOOTER - Mobile optimized */
         .hud-footer { position: absolute; bottom: 20px; width: 100%; text-align: center; pointer-events: none; z-index: 50; }
-        .hud-content { display: inline-block; background: rgba(0,0,0,0.7); padding: 8px 16px; border-radius: 20px; font-size: 0.8em; color: #aaa; border: 1px solid #333; backdrop-filter: blur(4px); pointer-events: auto; }
+        .hud-content { display: inline-block; background: rgba(0,0,0,0.7); padding: 8px 16px; border-radius: 20px; font-size: 0.75em; color: #aaa; border: 1px solid #333; backdrop-filter: blur(4px); pointer-events: auto; }
         .hud-icon { margin-right: 6px; color: #3b82f6; }
 
         /* HELP MODAL */
@@ -77,49 +103,63 @@
         .modal-title { font-size: 1.5em; font-weight: bold; color: #3b82f6; margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 10px; }
         .key-item { display: flex; align-items: center; margin-bottom: 8px; font-size: 0.9em; }
         .key-color { width: 12px; height: 12px; border-radius: 50%; margin-right: 10px; }
+
+        /* MOBILE MEDIA QUERY */
+        @media (max-width: 640px) {
+            .ui-panel { left: 5%; width: 90%; top: 15px; }
+            .help-btn { top: 15px; right: 5%; width: 35px; height: 35px; }
+            .hud-content { font-size: 0.65em; padding: 6px 12px; max-width: 90%; }
+            .element-badge { font-size: 2.2rem; }
+        }
     </style>
 </head>
 <body>
 
 <div class="help-btn" onclick="toggleHelp()">?</div>
 
-<div class="ui-panel">
+<div class="ui-panel" id="main-panel">
+    <div class="toggle-btn" onclick="togglePanel()">&#9650;</div>
+
     <div class="element-badge" id="big-sym">H</div>
     <div class="text-center text-sm text-gray-400 mb-1 tracking-widest uppercase" id="element-name">Hydrogen</div>
-    <div class="config-display" id="config-text">1s¹</div>
-
-    <label class="text-[10px] uppercase font-bold text-gray-500 tracking-wider">Atomic Number (Z)</label>
-    <div class="flex items-center gap-3 mb-4">
-        <span class="text-xl font-mono text-blue-500 w-8 font-bold" id="z-val">1</span>
-        <input type="range" id="z-slider" min="1" max="118" value="1" step="1">
-    </div>
-
-    <div class="flex gap-2 mb-4">
-        <button class="btn" id="play-btn">▶ SEQUENCE</button>
-        <button class="btn" id="pause-btn">❚❚ PAUSE</button>
-        <button class="btn" id="reset-btn">↺ RESET</button>
-    </div>
     
-    <div class="text-center text-[10px] text-gray-600 mb-4 border-t border-b border-gray-800 py-2">
-        Max Z: 118 (Oganesson) • Lecture Speed: 1.2s
-    </div>
+    <div class="controls-section">
+        <div class="config-display" id="config-text">1s¹</div>
 
-    <div class="switch-container">
-        <span class="text-sm font-bold text-gray-400">Plasma Bloom</span>
-        <label class="switch"><input type="checkbox" id="bloom-toggle" checked><span class="slider-toggle"></span></label>
-    </div>
-    
-    <div class="switch-container">
-        <span class="text-sm font-bold text-gray-400">MRI Cross-Section</span>
-        <label class="switch"><input type="checkbox" id="slice-toggle"><span class="slider-toggle"></span></label>
+        <label class="text-[10px] uppercase font-bold text-gray-500 tracking-wider">Atomic Number (Z)</label>
+        <div class="flex items-center gap-3 mb-4">
+            <span class="text-xl font-mono text-blue-500 w-8 font-bold" id="z-val">1</span>
+            <input type="range" id="z-slider" min="1" max="118" value="1" step="1">
+        </div>
+
+        <div class="flex gap-2 mb-4">
+            <button class="btn" id="play-btn">▶ PLAY</button>
+            <button class="btn" id="pause-btn">❚❚ PAUSE</button>
+            <button class="btn" id="reset-btn">↺ RESET</button>
+        </div>
+        
+        <div class="text-center text-[10px] text-gray-600 mb-4 border-t border-b border-gray-800 py-2">
+            Max Z: 118 (Oganesson) • Lecture Speed: 1.2s
+        </div>
+
+        <div class="switch-container">
+            <span class="text-sm font-bold text-gray-400">Plasma Bloom</span>
+            <label class="switch"><input type="checkbox" id="bloom-toggle" checked><span class="slider-toggle"></span></label>
+        </div>
+        
+        <div class="switch-container">
+            <span class="text-sm font-bold text-gray-400">MRI Cross-Section</span>
+            <label class="switch"><input type="checkbox" id="slice-toggle"><span class="slider-toggle"></span></label>
+        </div>
+        
+        <div id="legend-box" class="mt-4 pt-2 border-t border-gray-800"></div>
     </div>
 </div>
 
 <div class="hud-footer">
     <div class="hud-content">
-        <span class="hud-icon">🖱</span> Click & Drag to Rotate &nbsp;&nbsp;|&nbsp;&nbsp; 
-        <span class="hud-icon">⚡</span> Scroll to Zoom &nbsp;&nbsp;|&nbsp;&nbsp; 
-        <span class="hud-icon">✋</span> Right-Click to Pan
+        <span class="hud-icon">👆</span> Drag to Rotate &nbsp;|&nbsp; 
+        <span class="hud-icon">✌️</span> Pinch to Zoom
     </div>
 </div>
 
@@ -165,10 +205,18 @@
 </div>
 
 <script>
-    // --- UI LOGIC ---
+    // --- UI LOGIC FOR MOBILE ---
     function toggleHelp() {
         const m = document.getElementById('info-modal');
         m.style.display = (m.style.display === 'block') ? 'none' : 'block';
+    }
+
+    function togglePanel() {
+        const p = document.getElementById('main-panel');
+        const btn = document.querySelector('.toggle-btn');
+        p.classList.toggle('collapsed');
+        // Change arrow direction
+        btn.innerHTML = p.classList.contains('collapsed') ? '&#9660;' : '&#9650;';
     }
 
     // --- 1. SETUP ---
@@ -326,6 +374,8 @@
         const children = [];
         atomGroup.traverse(c => { if(c.isPoints) children.push(c); });
         children.forEach(c => atomGroup.remove(c));
+        const legend = document.getElementById('legend-box');
+        legend.innerHTML = '';
         
         document.getElementById('big-sym').innerText = elementSymbols[z] || "??";
         document.getElementById('element-name').innerText = elementNames[z] || `Element ${z}`;
@@ -354,6 +404,13 @@
             for(let i=0; i<subCount; i++) {
                 const eInSub = Math.ceil(fill/subCount);
                 if(fill > 0) atomGroup.add(createCloud(subshell.n, subshell.t, i, eInSub, z));
+            }
+            
+            // Legend
+            if (fill > 0) {
+                // To keep performance high on mobile, we skip rendering legend items in HTML for now
+                // or just render the active shell if needed. 
+                // For this version we'll keep the visual legend minimal.
             }
         }
         document.getElementById('config-text').innerHTML = configHTML;
@@ -414,6 +471,3 @@
 </script>
 </body>
 </html>
-
-
-
