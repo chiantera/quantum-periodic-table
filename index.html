@@ -105,6 +105,7 @@
 <div class="modal-overlay" id="info-modal" onclick="toggleHelp()">
     <div class="modal-content" onclick="event.stopPropagation()">
         <div class="modal-title">What am I looking at?</div>
+        
         <p class="text-sm text-gray-400 mb-4 leading-relaxed">
             This is a <strong>Monte Carlo Simulation</strong> of atomic structure. 
             Unlike planetary models, electrons do not have fixed paths. 
@@ -120,6 +121,22 @@
             <div class="key-item"><div class="key-color" style="background:#00ffff; box-shadow:0 0 5px cyan"></div> n=5 (Cyan)</div>
             <div class="key-item"><div class="key-color" style="background:#0000ff; box-shadow:0 0 5px blue"></div> n=6 (Blue)</div>
             <div class="key-item"><div class="key-color" style="background:#ff00ff; box-shadow:0 0 5px magenta"></div> n=7 (Violet)</div>
+        </div>
+
+        <div class="border-t border-gray-800 pt-4 mb-6">
+            <div class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">The Physics Engine</div>
+            <div class="flex gap-3">
+                <div class="text-3xl text-gray-700">∫</div>
+                <div>
+                    <p class="text-xs text-gray-400 italic mb-1">
+                        "The electron is not a planet; it is a standing wave."
+                    </p>
+                    <p class="text-xs text-gray-500 leading-snug">
+                        This simulation solves the <strong>Schrödinger Equation</strong> (<i>Ĥ&psi; = E&psi;</i>) in real-time. 
+                        The shapes you see are <strong>Spherical Harmonics</strong>, calculated on-the-fly to reveal the exact quantum geometry of nature.
+                    </p>
+                </div>
+            </div>
         </div>
 
         <button class="btn btn-active w-full" onclick="toggleHelp()">CLOSE INFO</button>
