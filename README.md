@@ -14,7 +14,7 @@ Unlike standard periodic tables that display static text, this tool renders the 
 
 ![screenshot_gif1](https://github.com/chiantera/quantum-periodic-table/tree/main/img/gif1.gif)
 
-![screenshot_titanium](https://github.com/chiantera/quantum-periodic-table/tree/main/img/gif1.gif)
+![screenshot_titanium](https://github.com/user-attachments/assets/470cc424-43cd-489d-8290-d1c776ecb1ea)
 
 ---
 
