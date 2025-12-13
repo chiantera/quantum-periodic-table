@@ -10,19 +10,19 @@
 
 Unlike standard periodic tables that display static text, this tool renders the actual **quantum probability clouds** ($|\psi|^2$) of electrons as they accumulate around the nucleus. It features a fully automated **"Lecture Mode"** that builds atoms sequentially according to the **Aufbau Principle** and the **Madelung Rule**.
 
-🔗 **[Live Demo](https://chiantera.github.io/quantum-periodic-table/)** 
+# **[-- LAUNCH APP IN BROWSER --](https://chiantera.github.io/quantum-periodic-table/)** 
 
 
+
+
+**Mobile Preview**
 
 ![gifmobile](https://github.com/user-attachments/assets/2f523450-cade-443d-8bf4-eee506effa6c)
 
+**Desktop Previews**
+
 ![gif1](https://github.com/user-attachments/assets/882a4861-f090-446e-bc4d-98bc88e4844b)
-
-
-
-
-https://github.com/chiantera/quantum-periodic-table/tree/main/img/screenshot_titanium.jpg
-![screenshot_titanium](https://github.com/chiantera/quantum-periodic-table/tree/main/img/screenshot_titanium.jpg)
+![screenshot_titanium](https://github.com/user-attachments/assets/470cc424-43cd-489d-8290-d1c776ecb1ea)
 
 ---
 
