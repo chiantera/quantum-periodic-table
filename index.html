@@ -80,7 +80,16 @@
         }
         .ui-panel.collapsed { height: 85px; overflow: hidden; background: rgba(8, 8, 12, 0.6); }
         .ui-panel.collapsed .controls-section { opacity: 0; pointer-events: none; }
-
+        /* Add this rule to your <style> block */
+.ui-panel.collapsed #big-sym {
+    font-size: 1.2rem; /* Reduce the font size significantly */
+    margin-bottom: 0px; /* Tighten up the spacing */
+    transition: font-size 0.3s, margin 0.3s; /* Add smooth transition */
+}
+/* Also, ensure the small H1 element name next to it is still visible */
+.ui-panel.collapsed #element-name {
+    display: none; /* Hide the full name when collapsed for compactness */
+}
         .toggle-btn {
             position: absolute; top: 15px; right: 15px; width: 30px; height: 30px;
             background: rgba(255,255,255,0.1); border-radius: 50%;
@@ -493,6 +502,7 @@
 </script>
 </body>
 </html>
+
 
 
 
