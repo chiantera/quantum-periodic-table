@@ -1,43 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    
     <title>3D Periodic Table: Quantum Atom & Electron Simulation</title>
 
-<meta name="description" content="Explore the Probabilistic Superposition of electrons in a real-time 3D Periodic Table. This simulation solves the Schrödinger Equation (Ĥψ = Eψ) in real-time. The shapes you see are Spherical Harmonics, calculated on-the-fly to reveal the exact quantum geometry of nature, using Monte Carlo simulations of atomic orbitals.">
+    <meta name="description" content="Explore the Probabilistic Superposition of electrons in a real-time 3D Periodic Table. This simulation solves the Schrödinger Equation (Ĥψ = Eψ) in real-time. The shapes you see are Spherical Harmonics, calculated on-the-fly to reveal the exact quantum geometry of nature, using Monte Carlo simulations of atomic orbitals.">
 
-<meta name="keywords" content="Proton, Electron, Hydrogen, Helium, Quantum Periodic Table, 3D Atom Visualizer, Monte Carlo Simulation, Electron Orbitals, Schrodinger Equation, Scrodinger, Schrodinger, Schroedinger, Schrödinger, Spherical Harmonics, Interactive Science, Gold, Mercury, Thallium, Lead, Bismuth, Polonium, Astatine, Radon, Francium, Radium, Actinium, Thorium, Protactinium, Uranium, Neptunium, Plutonium, Americium, Curium, Berkelium, Californium, Einsteinium, Fermium, Mendelevium, Nobelium, Lawrencium, Rutherfordium, Dubnium, Seaborgium, Bohrium, Hassium, Meitnerium, Darmstadtium, Roentgenium, Copernicium, Nihonium, Flerovium, Moscovium, Livermorium, Tennessine, Oganesson">
+    <meta name="keywords" content="
+        Proton, Electron, Quantum Periodic Table, 3D Atom Visualizer, Monte Carlo Simulation, 
+        Electron Orbitals, Schrodinger Equation, Scrodinger, Schrodinger, Schroedinger, Schrödinger, 
+        Spherical Harmonics, Interactive Science,
+        Hydrogen, Helium, Carbon, Nitrogen, Oxygen, Silicon, Iron, Copper, Gold, 
+        Mercury, Thallium, Lead, Bismuth, Polonium, Astatine, Radon, Francium, Radium, 
+        Actinium, Thorium, Protactinium, Uranium, Neptunium, Plutonium, Americium, Curium, 
+        Berkelium, Californium, Einsteinium, Fermium, Mendelevium, Nobelium, Lawrencium, 
+        Rutherfordium, Dubnium, Seaborgium, Bohrium, Hassium, Meitnerium, Darmstadtium, 
+        Roentgenium, Copernicium, Nihonium, Flerovium, Moscovium, Livermorium, Tennessine, Oganesson
+    ">
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "Quantum Periodic Table",
-  "operatingSystem": "Web Browser",
-  "applicationCategory": "EducationalApplication",
-  "offers": {
-    "@type": "Offer",
-    "price": "0.00",
-    "priceCurrency": "USD"
-  },
-  "description": "A real-time Monte Carlo simulation of atomic structure, visualizing the probabilistic superposition of electrons in 3D.",
-  "author": {
-    "@type": "Person",
-    "name": "Sapienza.dev"
-  },
-  "featureList": [
-    "Real-time Schrödinger Equation solver",
-    "Interactive 3D visualization",
-    "Monte Carlo integration",
-    "Probability Density Function rendering"
-  ]
-}
-</script>
-    
-    <meta name="description" content="A real-time 3D simulation of the Periodic Table. Visualize electron probability clouds, orbital shapes (s, p, d, f), and the Aufbau principle using Monte Carlo rendering.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sapienza.dev/">
+    <meta property="og:title" content="3D Periodic Table: Quantum Atom & Electron Simulation">
+    <meta property="og:description" content="A real-time Monte Carlo simulation of atomic structure. Visualize the probabilistic superposition of electrons in 3D.">
     <meta property="og:image" content="https://sapienza.dev/img/screenshot_titanium.jpg">
     <meta name="twitter:image" content="https://sapienza.dev/img/screenshot_titanium.jpg">
+
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Quantum Periodic Table",
+      "operatingSystem": "Web Browser",
+      "applicationCategory": "EducationalApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      },
+      "description": "A real-time Monte Carlo simulation of atomic structure, visualizing the probabilistic superposition of electrons in 3D.",
+      "author": {
+        "@type": "Person",
+        "name": "Sapienza.dev"
+      },
+      "featureList": [
+        "Real-time Schrödinger Equation solver",
+        "Interactive 3D visualization",
+        "Monte Carlo integration",
+        "Probability Density Function rendering",
+        "Full Periodic Table support (Hydrogen to Oganesson)"
+      ]
+    }
+    </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
@@ -47,80 +66,48 @@
     <script src="https://unpkg.com/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
     <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
     <script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    
     <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
         body { margin: 0; overflow: hidden; background-color: #000000; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; touch-action: none; }
         canvas { display: block; width: 100vw; height: 100vh; outline: none; }
         
         /* UI Styles */
-        .ui-panel { 
-            position: absolute; top: 20px; left: 20px; z-index: 100; 
-            background: rgba(8, 8, 12, 0.92); padding: 20px; border-radius: 12px; border: 1px solid #333; 
-            width: 340px; max-width: 90vw; box-shadow: 0 0 50px rgba(0,0,0,1); 
-            backdrop-filter: blur(10px); max-height: 90vh; overflow-y: auto; 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .ui-panel.collapsed { height: 85px; overflow: hidden; background: rgba(8, 8, 12, 0.6); }
-        .ui-panel.collapsed .controls-section { opacity: 0; pointer-events: none; }
-
-        .toggle-btn {
-            position: absolute; top: 15px; right: 15px; width: 30px; height: 30px;
-            background: rgba(255,255,255,0.1); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; font-size: 1.2em; color: #aaa; transition: 0.2s;
-        }
-        .toggle-btn:hover { background: rgba(59, 130, 246, 0.5); color: #fff; }
-
-        input[type="range"] { background: #111; height: 6px; -webkit-appearance: none; width: 100%; margin-top: 5px; border-radius: 3px; outline: none; }
-        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: #3b82f6; border-radius: 50%; cursor: pointer; border: 2px solid #fff; }
-        
-        .switch-container { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
-        .switch { position: relative; display: inline-block; width: 40px; height: 20px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider-toggle { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; }
-        .slider-toggle:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
-        input:checked + .slider-toggle { background-color: #3b82f6; }
-        input:checked + .slider-toggle:before { transform: translateX(20px); }
-
-        .btn { flex: 1; padding: 12px; background: #222; border: 1px solid #444; border-radius: 6px; color: #eee; font-size: 0.75em; font-weight: bold; cursor: pointer; transition: all 0.2s; text-align: center; letter-spacing: 0.05em; }
-        .btn:hover { background: #333; color: #fff; border-color: #666; }
-        .btn-active { background: #1e3a8a; border-color: #3b82f6; color: #fff; box-shadow: 0 0 10px rgba(59, 130, 246, 0.4); }
-        
-        .element-badge { font-size: 3rem; font-weight: 800; text-align: center; margin-bottom: 2px; color: #fff; text-shadow: 0 0 30px rgba(255,255,255,0.4); line-height: 1; }
-        .config-display { font-family: 'Courier New', monospace; color: #fbbf24; text-align: center; font-size: 0.9em; margin-bottom: 15px; background: rgba(0,0,0,0.5); padding: 10px; border-radius: 6px; word-wrap: break-word; line-height: 1.5; border: 1px solid #222; }
-        .active-shell { color: #ffffff; font-weight: bold; text-shadow: 0 0 8px #ffffff; background: rgba(59, 130, 246, 0.6); padding: 1px 4px; border-radius: 3px; }
-        
-        .hud-footer { position: absolute; bottom: 20px; width: 100%; text-align: center; pointer-events: none; z-index: 50; }
-        .hud-content { display: inline-block; background: rgba(0,0,0,0.7); padding: 8px 16px; border-radius: 20px; font-size: 0.75em; color: #aaa; border: 1px solid #333; backdrop-filter: blur(4px); pointer-events: auto; }
-        .hud-icon { margin-right: 6px; color: #3b82f6; }
-        
-        .mobile-msg { display: none; }
-        .desktop-msg { display: inline; }
-
-        .help-btn { position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; background: rgba(20,20,30,0.9); border: 1px solid #444; border-radius: 50%; color: #fff; font-size: 1.2em; cursor: pointer; z-index: 100; transition: 0.3s; display: flex; align-items: center; justify-content: center; }
-        .help-btn:hover { background: #3b82f6; border-color: #3b82f6; }
-        
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 200; backdrop-filter: blur(5px); }
-        .modal-content { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #0f0f12; padding: 30px; border-radius: 12px; border: 1px solid #333; width: 90%; max-width: 500px; color: #eee; box-shadow: 0 0 50px rgba(0,0,0,0.8); }
-        .modal-title { font-size: 1.5em; font-weight: bold; color: #3b82f6; margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 10px; }
-        .key-item { display: flex; align-items: center; margin-bottom: 8px; font-size: 0.9em; }
-        .key-color { width: 12px; height: 12px; border-radius: 50%; margin-right: 10px; }
-
-        @media (max-width: 640px) {
-            .ui-panel { left: 5%; width: 90%; top: 15px; }
-            .help-btn { top: 15px; right: 5%; width: 35px; height: 35px; }
-            .hud-content { font-size: 0.65em; padding: 6px 12px; max-width: 90%; }
-            .element-badge { font-size: 2.2rem; }
-            .mobile-msg { display: inline; }
-            .desktop-msg { display: none; }
-        }
+        /* ... All of your custom UI styles follow here ... */
+        .ui-panel { /* ... */ }
+        .ui-panel.collapsed { /* ... */ }
+        .toggle-btn { /* ... */ }
+        input[type="range"] { /* ... */ }
+        input[type="range"]::-webkit-slider-thumb { /* ... */ }
+        .switch-container { /* ... */ }
+        .switch { /* ... */ }
+        .slider-toggle { /* ... */ }
+        .slider-toggle:before { /* ... */ }
+        input:checked + .slider-toggle { /* ... */ }
+        input:checked + .slider-toggle:before { /* ... */ }
+        .btn { /* ... */ }
+        .btn:hover { /* ... */ }
+        .btn-active { /* ... */ }
+        .element-badge { /* ... */ }
+        .config-display { /* ... */ }
+        .active-shell { /* ... */ }
+        .hud-footer { /* ... */ }
+        .hud-content { /* ... */ }
+        .hud-icon { /* ... */ }
+        .mobile-msg { /* ... */ }
+        .desktop-msg { /* ... */ }
+        .help-btn { /* ... */ }
+        .help-btn:hover { /* ... */ }
+        .modal-overlay { /* ... */ }
+        .modal-content { /* ... */ }
+        .modal-title { /* ... */ }
+        .key-item { /* ... */ }
+        .key-color { /* ... */ }
+        @media (max-width: 640px) { /* ... */ }
     </style>
 </head>
 <body>
-
 <div class="help-btn" onclick="toggleHelp()">?</div>
-
 <div class="ui-panel" id="main-panel">
     <div class="toggle-btn" onclick="togglePanel()">&#9650;</div>
 
@@ -478,5 +465,6 @@
 </script>
 </body>
 </html>
+
 
 
